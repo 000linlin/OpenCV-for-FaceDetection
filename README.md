@@ -1,6 +1,8 @@
 # 基于OpenCV人脸检测
 基于OpenCV视觉库在图像或视频流上使用哈尔级联或SSD网络实现人脸检测。
 
+Based on OpenCV, detecting faces in images or video streams using Haar cascades classifier (VJ framework) or SSD networks.
+
 ## 开发环境
 * Python 3.10
 * OpenCV 4.6.0
