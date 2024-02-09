@@ -15,8 +15,7 @@
 * 运行`python test_WF.py -m ssd -r False`检测`./data/WiderFace/test_image/...`
 
 ### 视频流检测
-* 运行`python face_detection.py ./data/rowing.mp4 -m ssd -fw caffe -r (300,300) -v -s`
-检测`./data/rowing.mp4`
+* 运行`python face_detection.py ./data/rowing.mp4 -m ssd -fw caffe -r (300,300) -v -s`检测`./data/rowing.mp4`
 
 ## 结果查看
 在`./data/result`文件夹下查看保存的检测结果：
