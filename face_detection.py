@@ -36,6 +36,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "-r", "--resize",
+    # resize: tuple | bool | None, 若 resize=None 等同于 False
     type=lambda x: eval(x) if isinstance(eval(x), (tuple, bool)) else None,
     help="调整输入尺寸: bool or tuple"
 )
@@ -49,7 +50,10 @@ is_save = args.save
 is_video = args.video
 
 # 初始化分类器
-face_detector = Haar_detection() if model == "haar" else SSD_detection(fw)
+if model == "haar":
+    face_detector = Haar_detection("./haar_info/haarcascade_frontalface_alt2.xml")
+else:
+    SSD_detection(fw)
 
 dirPath = "./data/result"
 if not os.path.exists(dirPath):
@@ -75,9 +79,7 @@ if (is_video):
     while True:
         # 获取每一帧
         ret, frame = capture.read()
-
-        if not ret:
-            break
+        if not ret: break
 
         frame_count += 1
         t = time.time()
