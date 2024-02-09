@@ -7,7 +7,7 @@ class Haar_detection:
         self.haar_detector = cv2.CascadeClassifier("./haar_info/haarcascade_frontalface_alt2.xml")
 
     # 检测人脸图像
-    def detect(self, image, conf_thre=None, resize: tuple | bool = True, annotation=True):
+    def detect(self, image, resize: tuple | bool = True, annotation=True):
         imageCopy = image.copy()
         resizeH, resizeW = image.shape[0], image.shape[1]
         if isinstance(resize, bool) and resize:
@@ -71,7 +71,7 @@ class SSD_detection:
         else:
             raise ValueError
 
-    def detect(self, image, conf_thre=0.6, resize: tuple | bool = False, annotation=True):
+    def detect(self, image, resize: tuple | bool = False, annotation=True):
         H, W = image.shape[:2]
         if isinstance(resize, bool) and resize:
             size = (500, 500)
@@ -88,11 +88,9 @@ class SSD_detection:
         detections = self.ssd.forward()  # detections.shape = [1, 1, 200, 7]
 
         if annotation:
-            print(np.array(detections[0, 0, :, 1]).sum())
             for i in range(0, detections.shape[2]):
                 conf = detections[0, 0, i, 2]
-                if conf > conf_thre:
-                    print()
+                if conf > 0.7:    # 筛选置信度高于0.7的人脸框
                     box = detections[0, 0, i, 3:7] * np.array([W, H, W, H])
                     x1, y1, x2, y2 = box.astype("int")  # (x1, y1): 左下角坐标; (x2, y2): 右上角坐标
 
