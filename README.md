@@ -12,8 +12,8 @@ Based on OpenCV, detecting faces in images or video streams using Haar cascades 
 ### Python
 运行`python face_detection.py -h`查看程序参数说明
 #### 图像检测
-* 运行`python face_detection.py ./data/test.jpg -m ssd -r False -s
-* 运行`python test_WF.py -m ssd -r False
+* 运行`python face_detection.py ./data/test.jpg -m ssd -r False -s`
+* 运行`python test_WF.py -m ssd -r False`
 #### 视频检测
 * 运行`python face_detection.py ./data/rowing.mp4 -m ssd -fw caffe -r (300,300) -v -s`
 
