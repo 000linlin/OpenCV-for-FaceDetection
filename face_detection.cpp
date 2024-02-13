@@ -35,6 +35,7 @@ private:
     cv::CascadeClassifier haar_detector;
 
 public:
+    Haar_detection(){haar_detector.load(XML_PATH);}
     Haar_detection(const string xmlPath){
         haar_detector.load(xmlPath);
     };
