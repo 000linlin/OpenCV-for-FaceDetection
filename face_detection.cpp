@@ -156,9 +156,18 @@ public:
 
 int main(int argc, char *argv[])
 {
+    /*
+    arguments 
+    path: image or video 
+    model: "ssd" or "haar"
+    isVideo: set "T" or "true" to detect video 
+    size: input image size
+    framework: "caffe" of "tf"(tensorflow)
+    */
+
     string path, model, isVideo, size, framework; 
-    model = "haar";
     path = IMAGE_PATH;
+    model = "haar";
     isVideo = "";
     size = "(0,0)";
     framework = "caffe";
@@ -193,7 +202,7 @@ int main(int argc, char *argv[])
             framework = argv[5];
             break;
         default:
-            throw invalid_argument("arguments: path|model|isVideo|size|framework");
+            throw invalid_argument("Invalid arguments");
     }
 
     size_t comma_pos = size.find(',');
@@ -226,11 +235,19 @@ int main(int argc, char *argv[])
     {
         cv::VideoCapture source;
         source.open(path);
+        cv::Mat frame;
+        source >> frame;
+
+        cv::VideoWriter video_writer(
+            "./data/result/rowing_cpp.mp4",
+            cv::VideoWriter::fourcc('m', 'p', '4', 'v'), 
+            30.0,
+            cv::Size(frame.cols, frame.rows)
+        );
 
         double tt = 0;
         double fps = 0;
 
-        cv::Mat frame;
         cv::namedWindow("FaceDetection", cv::WINDOW_FREERATIO);
         while (true)
         {
@@ -253,6 +270,7 @@ int main(int argc, char *argv[])
                 1.3, cv::Scalar(0, 0, 255), 3, cv::LINE_AA
             );
 
+            video_writer.write(frame);
             cv::imshow("FaceDetection", frame);
             if(cv::waitKey(5) == 27) break;
         }
@@ -268,9 +286,11 @@ int main(int argc, char *argv[])
 
         vector<cv::Rect> faces;
         face_detector->detect(img, faces, cv::Size(W, H));
-
+        cv::imwrite("./data/result/test_result.jpg", img);
+        
         cv::imshow("FaceDetection", img);
         cv::waitKey();
+        cv::destroyAllWindows();
     }
 
     return 0;
